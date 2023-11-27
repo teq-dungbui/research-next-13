@@ -1,7 +1,5 @@
-import Loading from "@/app/loading";
 import { ITicket } from "@/types/ticket";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 
 export const dynamicParams = true; // default val = true
 
@@ -15,10 +13,22 @@ export async function generateStaticParams() {
   }));
 }
 
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const id = params.id;
+
+  const res = await fetch(`http://localhost:4000/tickets/${id}`);
+  const ticket = await res.json();
+
+  return {
+    title: `Next.JS 13 | ${ticket.title}`,
+    description: ticket.body.slice(0, 100),
+  };
+}
+
 const getTicket = async (id: string): Promise<ITicket> => {
   // imitate delay
-//   await new Promise((resolve) => setTimeout(resolve, 3000));
-  
+  //   await new Promise((resolve) => setTimeout(resolve, 3000));
+
   const res = await fetch(`http://localhost:4000/tickets/${id}`, {
     next: {
       revalidate: 60,

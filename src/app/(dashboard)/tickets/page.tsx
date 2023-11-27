@@ -5,7 +5,7 @@ import Loading from "../loading";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Tickets page",
+  title: "Next.JS 13 | Tickets",
   description: "Tickets page for demo Next.JS 13",
 };
 
